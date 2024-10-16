@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .display {
+            background-color: #333;
+            color: #fff;
+            text-align: right;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .operator {
+            background-color: #f39c12;
+            color: white;
+        }
+        .number {
+            background-color: #ecf0f1;
+        }
+        .equals {
+            background-color: #2ecc71;
+            color: white;
+            grid-column: span 3;
+        }
+        .clear {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="calculateHalf()">½</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button class="number" onclick="appendNumber('7')">7</button>
+            <button class="number" onclick="appendNumber('8')">8</button>
+            <button class="number" onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            <button class="number" onclick="appendNumber('4')">4</button>
+            <button class="number" onclick="appendNumber('5')">5</button>
+            <button class="number" onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            <button class="number" onclick="appendNumber('1')">1</button>
+            <button class="number" onclick="appendNumber('2')">2</button>
+            <button class="number" onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('%')">%</button>
+            <button class="number" onclick="appendNumber('0')">0</button>   
+            <button class="equals" onclick="calculate()">=</button>
+            
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function clearDisplay() {
+            display.textContent = '0';
+        }
+
+        function appendNumber(number) {
+            if (display.textContent === '0') {
+                display.textContent = number;
+            } else {
+                display.textContent += number;
+            }
+        }
+
+        function appendOperator(operator) {
+            display.textContent += ` ${operator} `;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(display.textContent.replace('×', '*').replace('÷', '/'));
+                display.textContent = result;
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
+
+        function calculateHalf() {
+            try {
+                let currentValue = parseFloat(display.textContent);
+                if (!isNaN(currentValue)) {
+                    display.textContent = currentValue / 2;
+                }
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
+    </script>
+</body>
+</html>
