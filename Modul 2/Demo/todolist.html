@@ -1,60 +1,164 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="styledemo2.css">
-    <title>Hello, world!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App with Edit Feature</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f7f8fc;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: #ffffff;
+            width: 350px;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        .input-group button {
+            padding: 10px;
+            font-size: 1em;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        .input-group button:hover {
+            background-color: #45a049;
+        }
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            background-color: #eaf2f8;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .todo-item:hover {
+            background-color: #d0e0f1;
+        }
+        .todo-text {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .btn-group {
+            display: flex;
+            gap: 5px;
+        }
+        .edit-btn, .delete-btn {
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            padding: 5px 10px;
+        }
+        .delete-btn {
+            background-color: #ff4c4c;
+        }
+    </style>
 </head>
-
 <body>
-
-    <div class="container-fluid">
-       <div class="container backdrop">
-        <div class="container p-5 bg-todolist bg-warning">
-            <div class="row" style="justify-content: center; align-items: center;">
-                <div class="col-md-6">
-                    <h3 class="text-center">TO DO LIST</h3>
-                </div>
-            </div>
+    <div class="container">
+        <h1>My To-Do List</h1>
+        <div class="input-group">
+            <input type="text" id="todo-input" placeholder="Add a new task...">
+            <button onclick="addTodo()">Add</button>
         </div>
-        <div class="container mt-5 p-4" style="max-width: 74vh;">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon"
-                    aria-describedby="button-addon1">
-                <div class="input-group-append">
-                    <button class="btn btn-info btn-add" type="button"><i class="bi bi-plus-circle"></i></button>
-                </div>
-            </div>
-            <ul class="list-task mt-5">
-                
-            </ul>
-        </div>
-       </div>
+        <ul class="todo-list" id="todo-list">
+            <!-- List items will be added here dynamically -->
+        </ul>
     </div>
 
+    <script>
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const todoText = input.value.trim();
+            
+            if (todoText === '') {
+                alert('Please enter a task!');
+                return;
+            }
+            
+            const todoList = document.getElementById('todo-list');
+            const todoItem = document.createElement('li');
+            todoItem.className = 'todo-item';
+            
+            const span = document.createElement('span');
+            span.className = 'todo-text';
+            span.textContent = todoText;
+            
+            const btnGroup = document.createElement('div');
+            btnGroup.className = 'btn-group';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'edit-btn';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = function() {
+                editTask(span, editBtn);
+            };
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'delete-btn';
+            deleteBtn.textContent = '×';
+            deleteBtn.onclick = function() {
+                todoList.removeChild(todoItem);
+            };
+            
+            btnGroup.appendChild(editBtn);
+            btnGroup.appendChild(deleteBtn);
+            todoItem.appendChild(span);
+            todoItem.appendChild(btnGroup);
+            todoList.appendChild(todoItem);
+            
+            input.value = '';
+        }
 
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="scripttest.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+        function editTask(span, editBtn) {
+            const currentText = span.textContent;
+            const newText = prompt('Edit your task:', currentText);
+            
+            if (newText !== null) {
+                const trimmedText = newText.trim();
+                if (trimmedText !== '') {
+                    span.textContent = trimmedText;
+                } else {
+                    alert('Task cannot be empty.');
+                }
+            }
+        }
     </script>
 </body>
-
 </html>

@@ -1,110 +1,130 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="styledemo2.css">
-    <title>Hello, world!</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .display {
+            background-color: #333;
+            color: #fff;
+            text-align: right;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.5em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .operator {
+            background-color: #f39c12;
+            color: white;
+        }
+        .number {
+            background-color: #ecf0f1;
+        }
+        .equals {
+            background-color: #2ecc71;
+            color: white;
+            grid-column: span 3;
+        }
+        .clear {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="container-fluid">
-        <div class="container bg-calculator">
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="screen" readonly>
-                </div>
-            </form>
-            <div class="row">
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">7</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">8</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">9</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">+</button>  
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">4</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">5</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">6</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">-</button>  
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">3</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">2</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">1</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">x</button>  
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">0</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">%</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">x^2</button>  
-                </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">/</button>  
-                </div>
-              
-            </div>
-            <div class="row mt-3">
-                            <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary"style="width: 23vh;">AC</button>  
-                </div>
-                <div class="col-sm-3 " style="margin-left: 13.4vh;">
-                    <button type="button" class="btn btn-primary">C</button>  
-                </div>
-                     
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary">=</button>  
-                </div>
-            </div>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="calculateHalf()">½</button>
+            <button class="operator" onclick="appendOperator('/')">÷</button>
+            <button class="operator" onclick="appendOperator('*')">×</button>
+            <button class="number" onclick="appendNumber('7')">7</button>
+            <button class="number" onclick="appendNumber('8')">8</button>
+            <button class="number" onclick="appendNumber('9')">9</button>
+            <button class="operator" onclick="appendOperator('-')">-</button>
+            <button class="number" onclick="appendNumber('4')">4</button>
+            <button class="number" onclick="appendNumber('5')">5</button>
+            <button class="number" onclick="appendNumber('6')">6</button>
+            <button class="operator" onclick="appendOperator('+')">+</button>
+            <button class="number" onclick="appendNumber('1')">1</button>
+            <button class="number" onclick="appendNumber('2')">2</button>
+            <button class="number" onclick="appendNumber('3')">3</button>
+            <button class="operator" onclick="appendOperator('%')">%</button>
+            <button class="number" onclick="appendNumber('0')">0</button>   
+            <button class="equals" onclick="calculate()">=</button>
+            
         </div>
     </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="scriptdemo2.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    <script>
+        const display = document.getElementById('display');
+
+        function clearDisplay() {
+            display.textContent = '0';
+        }
+
+        function appendNumber(number) {
+            if (display.textContent === '0') {
+                display.textContent = number;
+            } else {
+                display.textContent += number;
+            }
+        }
+
+        function appendOperator(operator) {
+            display.textContent += ` ${operator} `;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(display.textContent.replace('×', '*').replace('÷', '/'));
+                display.textContent = result;
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
+
+        function calculateHalf() {
+            try {
+                let currentValue = parseFloat(display.textContent);
+                if (!isNaN(currentValue)) {
+                    display.textContent = currentValue / 2;
+                }
+            } catch {
+                display.textContent = 'Error';
+            }
+        }
     </script>
 </body>
-
 </html>
+
